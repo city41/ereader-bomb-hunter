@@ -32,13 +32,16 @@ CONVERTPNG=../scripts/convertpng.sh
 # this allows a custom mgba setup to execute and run the e-reader and have the cards ready to go
 # your mgba binary
 MGBA=mgba-qt
-# the ereader rom
+# the ereader rom for each region
 EREADER_MGBA_ROM=~/roms/gba/ereaderUSA.zip
 EREADER_MGBA_ROM_SAV=~/roms/gba/ereaderUSA.sav
+EREADER_MGBA_ROM_JPN=~/roms/gba/ereaderJPN.zip
+EREADER_MGBA_ROM_SAV_JPN=~/roms/gba/ereaderJPN.sav
 
 PRELUDE?=
 REGION?=1
 TEXT?=UNIVERSAL
+DPI?=1200
 
 sav: $(OUTNAME).sav
 
@@ -52,15 +55,14 @@ $(OUTNAME).sav: $(Z80_ASM_NAME).vpk
 # so after nedcmake runs, if it made one raw or 8 raws, it will create new make rules for each created raw
 # that way "make raws" or "make bmps" makes the correct number accounting for all needed strips
 raws.mk: $(Z80_ASM_NAME).vpk
-	$(NEDCMAKE) -i $(Z80_ASM_NAME).vpk -o $(Z80_ASM_NAME).raw -type 1 -region $(REGION) -name '$(EREADER_NAME)' -raw -save 1;
-	I=1; for r in $(Z80_ASM_NAME).raw*.raw; do \
-		echo "$(OUTNAME).ereader$$I.raw: $r"; \
+	$(NEDCMAKE) -i $(Z80_ASM_NAME).vpk -o $(OUTNAME).raw -type 1 -region $(REGION) -name '$(EREADER_NAME)' -raw -save 1;
+	I=1; for r in $(OUTNAME).raw*.raw; do \
+		echo "$(OUTNAME).r$(REGION).$(TEXT).ereader$$I.raw: $r"; \
 		echo "	mv $$r $(OUTNAME).r$(REGION).$(TEXT).ereader$$I.raw"; \
-		echo "RAW_TARGETS += $(OUTNAME).ereader$$I.raw"; \
-		echo "MGBA_ECARD_FLAGS += --ecard $(OUTNAME).ereader$$I.raw"; \
-		echo "$(OUTNAME).ereader$$I.bmp: $(OUTNAME).ereader$$I.raw"; \
-		echo "	$(RAW2BMP) -i $(OUTNAME).ereader$$I.raw -o $(OUTNAME).dotcode$$I -dpi 600"; \
-		echo "BMP_TARGETS += $(OUTNAME).ereader$$I.bmp"; \
+		echo "RAW_TARGETS += $(OUTNAME).r$(REGION).$(TEXT).ereader$$I.raw"; \
+		echo "$(OUTNAME).r$(REGION).$(TEXT).ereader$$I.bmp: $(OUTNAME).r$(REGION).$(TEXT).ereader$$I.raw"; \
+		echo "	$(RAW2BMP) -i $(OUTNAME).r$(REGION).$(TEXT).ereader$$I.raw -o $(OUTNAME).r$(REGION).$(TEXT).dotcode$$I -dpi $(DPI)"; \
+		echo "BMP_TARGETS += $(OUTNAME).r$(REGION).$(TEXT).ereader$$I.bmp"; \
 		((I = I + 1)); \
 	done > $@
 
@@ -97,3 +99,8 @@ runsav: $(OUTNAME).sav
 	rm $(EREADER_MGBA_ROM_SAV);
 	cp $(OUTNAME).sav $(EREADER_MGBA_ROM_SAV);
 	$(MGBA) $(EREADER_MGBA_ROM)
+
+runsavjpn: $(OUTNAME).sav
+	rm $(EREADER_MGBA_ROM_SAV_JPN);
+	cp $(OUTNAME).sav $(EREADER_MGBA_ROM_SAV_JPN);
+	$(MGBA) $(EREADER_MGBA_ROM_JPN)
