@@ -1,0 +1,40 @@
+{
+  "outputDir": "..",
+  "sprites": [
+    {
+      "sharedPalette": [
+        {
+          "file": "playfieldTiles.png",
+          "frames": 20
+        },
+        {
+          "file": "bombDropIntroPlayfieldCover.png",
+          "frames": 1
+        },
+        {
+          "file": "negativeSign.png",
+          "frames": 1
+        },
+        {
+          "file": "cursor.png",
+          "frames": 2
+        },
+        {
+          "file": "hud.png",
+          "frames": 1
+        },
+        {
+          "file": "difficultyDiamonds.png",
+          "frames": 1
+        },
+        {
+          "file": "animals.png",
+          "frames": 1,
+          "trimPalette": true
+        }
+      ],
+      "name": "playfieldTiles",
+      "trimPalette": true
+    }
+  ]
+}
