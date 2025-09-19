@@ -1,4 +1,4 @@
-# Bomb Hunter, a Minesweerp clone for the Nintendo E-Reader
+# Bomb Hunter, a Minesweeper clone for the Nintendo E-Reader
 
 This is the classic game of Minesweeper for the Nintendo E-Reader. It is written as an E-Reader z80 application.
 
@@ -17,7 +17,7 @@ This will create `src/bombHunter.sav` which can be loaded into an emulator or fl
 
 ## Running in mGBA
 
-As long as `mgba` is in your path, then `make clean && make runsav` should build the game then immediately launch it in mGBA. This requires the ereader ROM to be where the Makefile expects it. Look for `EREADER_MGBA_ROM` and `MGBA` in the Makefile.
+`make clean && make runsav` will build the game then immediately launch it in mGBA. This requires the ereader ROM and mgba to be where the Makefile expects them. Look for `EREADER_MGBA_ROM` and `MGBA` in the Makefile.
 
 ## Creating raws and bmps
 
