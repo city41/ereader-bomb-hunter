@@ -13,7 +13,7 @@ cd src
 make clean && make sav
 ```
 
-This will create `src/bombHunter.sav` which can be loaded into an emulator or flash card along with the ereader ROM.
+This will create `src/bombHunter.sav` which can be loaded into an emulator or flash cart along with the ereader ROM.
 
 ## Running in mGBA
 
@@ -45,7 +45,7 @@ The graphics are built using `src/convertpng`, a very simple png to gba graphics
 
 ### Changing graphics gotcha
 
-To save space, a sprite uses the same tile data as a background. I did this very hacky and manually, I just added a label in `playfieldTIles.tiles.asm`. If you run `make gfx`, you will get a fresh copy of that file without the label in it, and then from there the game will error when assembling.
+To save space, a sprite uses the same tile data as a background. I did this very hacky and manually, I just added a label in `playfieldTiles.tiles.asm`. If you run `make gfx`, you will get a fresh copy of that file without the label in it, and then from there the game will error when assembling.
 
 To fix. Open up `playfieldTiles.tiles.asm` and on line 449, add the label `_i_tiles_bomb:`, it should look like this
 
@@ -56,7 +56,7 @@ To fix. Open up `playfieldTiles.tiles.asm` and on line 449, add the label `_i_ti
  449 _i_tiles_bomb:
  450 .db 0x00,0x00,0x00,0x00
  451 .db 0x00,0x00,0x00,0x00
- 451 .db 0x00,0x00,0x00,0x00
+ 452 .db 0x00,0x00,0x00,0x00
 ```
 
 Hacky as heck, but what can ya do?
