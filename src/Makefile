@@ -27,7 +27,7 @@ NEVPK=$(WINE) $(BIN)/nevpk.exe
 ASLINK=$(BIN)/aslink
 # ASZ80_EREADER=$(WINE) asz80-ereader.exe
 ASZ80_EREADER=$(BIN)/asz80
-CONVERTPNG=../scripts/convertpng.sh
+CONVERTPNG=../node_modules/.bin/gba-convertpng
 
 # this allows a custom mgba setup to execute and run the e-reader and have the cards ready to go
 # your mgba binary
